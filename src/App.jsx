@@ -18,6 +18,10 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminCategories from './pages/admin/AdminCategories';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminLogin from './pages/admin/AdminLogin';
+import AddProduct from './pages/admin/AddProduct';
+import EditProduct from './pages/admin/EditProduct';
+import AddCategory from './pages/admin/AddCategory';
+import EditCategory from './pages/admin/EditCategory';
 
 function App() {
   const { i18n } = useTranslation();
@@ -46,7 +50,11 @@ function App() {
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="categories" element={<AdminCategories />} />
+              <Route path="categories/add" element={<AddCategory />} />
+              <Route path="categories/edit/:id" element={<EditCategory />} />
               <Route path="products" element={<AdminProducts />} />
+              <Route path="products/add" element={<AddProduct />} />
+              <Route path="products/edit/:id" element={<EditProduct />} />
             </Route>
           </Routes>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { addCategory, updateCategory, deleteCategory } from '../../store/slices/categoriesSlice';
 import { Plus, Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
@@ -9,43 +10,7 @@ const AdminCategories = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categories);
-  const [showModal, setShowModal] = useState(false);
-  const [editingCategory, setEditingCategory] = useState(null);
-  const [formData, setFormData] = useState({
-    categorie_name: '',
-    sizes: '',
-    categorie_img: '',
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const categoryData = {
-      id: editingCategory?.id || Date.now().toString(),
-      categorie_name: formData.categorie_name,
-      sizes: formData.sizes ? formData.sizes.split(',').map(s => s.trim()) : [],
-      categorie_img: formData.categorie_img,
-    };
-
-    if (editingCategory) {
-      dispatch(updateCategory(categoryData));
-    } else {
-      dispatch(addCategory(categoryData));
-    }
-
-    setShowModal(false);
-    setEditingCategory(null);
-    setFormData({ categorie_name: '', sizes: '', categorie_img: '' });
-  };
-
-  const handleEdit = (category) => {
-    setEditingCategory(category);
-    setFormData({
-      categorie_name: category.categorie_name,
-      sizes: category.sizes.join(', '),
-      categorie_img: category.categorie_img,
-    });
-    setShowModal(true);
-  };
+  const navigate = useNavigate();
 
   const handleDelete = (id) => {
     if (window.confirm('هل أنت متأكد من حذف هذا التصنيف؟')) {
@@ -53,18 +18,12 @@ const AdminCategories = () => {
     }
   };
 
-  const handleAddNew = () => {
-    setEditingCategory(null);
-    setFormData({ categorie_name: '', sizes: '', categorie_img: '' });
-    setShowModal(true);
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-900">{t('categories')}</h1>
         <button
-          onClick={handleAddNew}
+          onClick={() => navigate('/admin/categories/add')}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2 rtl:space-x-reverse"
         >
           <Plus className="h-5 w-5" />
@@ -84,7 +43,7 @@ const AdminCategories = () => {
               />
               <div className="absolute top-2 right-2 flex space-x-2 rtl:space-x-reverse">
                 <button
-                  onClick={() => handleEdit(category)}
+                  onClick={() => navigate(`/admin/categories/edit/${category.id}`)}
                   className="bg-white bg-opacity-90 p-2 rounded-full hover:bg-opacity-100 transition-colors duration-200"
                 >
                   <Edit2 className="h-4 w-4 text-blue-600" />
@@ -108,70 +67,6 @@ const AdminCategories = () => {
           </div>
         ))}
       </div>
-
-      {/* Add/Edit Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-2">
-          <div className="bg-white rounded-xl p-4 sm:p-6 w-full max-w-xs sm:max-w-md">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">
-              {editingCategory ? 'تعديل التصنيف' : 'إضافة تصنيف جديد'}
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  اسم التصنيف
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.categorie_name}
-                  onChange={(e) => setFormData({ ...formData, categorie_name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  المقاسات (مفصولة بفواصل)
-                </label>
-                <input
-                  type="text"
-                  value={formData.sizes}
-                  onChange={(e) => setFormData({ ...formData, sizes: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="S, M, L, XL"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  رابط الصورة
-                </label>
-                <input
-                  type="url"
-                  required
-                  value={formData.categorie_img}
-                  onChange={(e) => setFormData({ ...formData, categorie_img: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div className="flex space-x-3 rtl:space-x-reverse">
-                <button
-                  type="submit"
-                  className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                >
-                  {editingCategory ? 'تحديث' : 'إضافة'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-200"
-                >
-                  إلغاء
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
