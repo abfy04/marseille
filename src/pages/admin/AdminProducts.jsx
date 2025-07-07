@@ -11,7 +11,7 @@ const AdminProducts = () => {
   const products = useSelector((state) => state.products.products);
   const categories = useSelector((state) => state.categories.categories);
   const [showModal, setShowModal] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<any>(null);
+  const [editingProduct, setEditingProduct] = useState(null);
   const [formData, setFormData] = useState({
     product_name: '',
     categorie_id: '',
@@ -127,22 +127,22 @@ const AdminProducts = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-2 md:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   المنتج
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="hidden sm:table-cell px-2 md:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   التصنيف
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-2 md:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   السعر
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="hidden sm:table-cell px-2 md:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   الكمية
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="hidden md:table-cell px-2 md:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   الحالة
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-2 md:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   الإجراءات
                 </th>
               </tr>
@@ -150,30 +150,30 @@ const AdminProducts = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {products.map((product) => (
                 <tr key={product.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-2 md:px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <img
                         src={product.product_img}
                         alt={product.product_name}
-                        className="h-12 w-12 rounded-lg object-cover"
+                        className="h-10 w-10 md:h-12 md:w-12 rounded-lg object-cover"
                       />
-                      <div className="mr-4">
-                        <div className="text-sm font-medium text-gray-900">
+                      <div className="mr-2 md:mr-4">
+                        <div className="text-xs md:text-sm font-medium text-gray-900">
                           {product.product_name}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-xs text-gray-500">
                           {product.sizes.length > 0 && `المقاسات: ${product.sizes.join(', ')}`}
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="hidden sm:table-cell px-2 md:px-6 py-4 whitespace-nowrap">
                     <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
                       {getCategoryName(product.categorie_id)}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
+                  <td className="px-2 md:px-6 py-4 whitespace-nowrap">
+                    <div className="text-xs md:text-sm text-gray-900">
                       {product.is_offered ? (
                         <div>
                           <span className="font-bold text-red-600">{product.offered_price} د.م</span>
@@ -184,7 +184,7 @@ const AdminProducts = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="hidden sm:table-cell px-2 md:px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${
                       product.quantity > 10 
                         ? 'bg-green-100 text-green-800' 
@@ -195,7 +195,7 @@ const AdminProducts = () => {
                       {product.quantity}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="hidden md:table-cell px-2 md:px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2 rtl:space-x-reverse">
                       {product.is_offered && (
                         <span className="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">
@@ -211,8 +211,8 @@ const AdminProducts = () => {
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                  <td className="px-2 md:px-6 py-4 whitespace-nowrap text-xs md:text-sm font-medium">
+                    <div className="flex flex-col md:flex-row items-start md:items-center space-y-1 md:space-y-0 md:space-x-2 rtl:space-x-reverse">
                       <button
                         onClick={() => handleEdit(product)}
                         className="text-blue-600 hover:text-blue-900 transition-colors duration-200"
@@ -244,9 +244,9 @@ const AdminProducts = () => {
 
       {/* Add/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-2">
+          <div className="bg-white rounded-xl p-4 sm:p-6 w-full max-w-xs sm:max-w-lg md:max-w-2xl max-h-[90vh] overflow-y-auto">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">
               {editingProduct ? 'تعديل المنتج' : 'إضافة منتج جديد'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">

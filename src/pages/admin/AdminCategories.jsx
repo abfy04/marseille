@@ -10,7 +10,7 @@ const AdminCategories = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categories);
   const [showModal, setShowModal] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<any>(null);
+  const [editingCategory, setEditingCategory] = useState(null);
   const [formData, setFormData] = useState({
     categorie_name: '',
     sizes: '',
@@ -73,7 +73,7 @@ const AdminCategories = () => {
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {categories.map((category) => (
           <div key={category.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200">
             <div className="aspect-square relative">
@@ -97,10 +97,10 @@ const AdminCategories = () => {
                 </button>
               </div>
             </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{category.categorie_name}</h3>
+            <div className="p-3 sm:p-4">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">{category.categorie_name}</h3>
               {category.sizes.length > 0 && (
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600">
                   المقاسات: {category.sizes.join(', ')}
                 </p>
               )}
@@ -111,9 +111,9 @@ const AdminCategories = () => {
 
       {/* Add/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-2">
+          <div className="bg-white rounded-xl p-4 sm:p-6 w-full max-w-xs sm:max-w-md">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">
               {editingCategory ? 'تعديل التصنيف' : 'إضافة تصنيف جديد'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">

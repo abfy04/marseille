@@ -32,14 +32,14 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 flex items-center justify-center">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
-        <div className="text-center mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 flex items-center justify-center px-2">
+      <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-8 w-full max-w-xs sm:max-w-md">
+        <div className="text-center mb-6 sm:mb-8">
           <div className="flex items-center justify-center mb-4">
-            <Store className="h-12 w-12 text-blue-600" />
+            <Store className="h-10 w-10 sm:h-12 sm:w-12 text-blue-600" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">لوحة التحكم</h1>
-          <p className="text-gray-600">مرحباً بك في نظام إدارة مارسيليا ستايل</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">لوحة التحكم</h1>
+          <p className="text-xs sm:text-base text-gray-600">مرحباً بك في نظام إدارة مارسيليا ستايل</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
